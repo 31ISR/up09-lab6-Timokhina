@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('todos', function (Blueprint $table) {
+            $table->id();
             $table->string('name', length:75);
             $table->boolean('done');
             $table->boolean('urgent');
             $table->dateTime('dateCompleted');
+            $table->timestamps();
         });
     }
 

@@ -28,6 +28,6 @@ class DatabaseSeeder extends Seeder
 
         // Создаем 100 заметок для теста
         Note::factory(100)->create();
-        Todo::factory(100)->create();
+        Todo::factory(20)->create();
     }
 }

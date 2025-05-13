@@ -10,5 +10,4 @@ class Todo extends Model
     use HasFactory;
 
     protected $fillable = ['name','done','urgent','dateCompleted'];
-    public $timestamps = false;
 }
