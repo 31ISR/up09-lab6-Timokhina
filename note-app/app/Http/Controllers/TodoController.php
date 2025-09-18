@@ -12,7 +12,9 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return view('todo.index');
+        $todos = Todo::query()->orderBy('created_at', 'desc')->paginate();
+        dd($todos);
+        return view('todo.index', ['todos' => $todos]);
     }
 
     /**
@@ -36,7 +38,7 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        return view('todo.show');
+        return view('todo.show', ['todo' => $todo]);
     }
 
     /**
@@ -44,7 +46,7 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        return view('todo.edit');
+        return view('todo.edit', ['todo' => $todo]);
     }
 
     /**

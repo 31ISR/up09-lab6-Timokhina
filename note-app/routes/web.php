@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\GoodbyeController;
 use App\Http\Controllers\NoteController;
+use App\Models\Note;
 use App\Http\Controllers\TodoController;
 use App\Models\Todo;
 
