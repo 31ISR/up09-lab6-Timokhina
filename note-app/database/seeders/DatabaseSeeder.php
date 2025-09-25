@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Note;
 use App\Models\Todo;
 
+
+
 class DatabaseSeeder extends Seeder
 {
     /**

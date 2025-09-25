@@ -13,7 +13,6 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::query()->orderBy('created_at', 'desc')->paginate();
-        dd($todos);
         return view('todo.index', ['todos' => $todos]);
     }
 
@@ -30,7 +29,14 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'todo' => ['required', 'string']
+        ]);
+
+        $data['user_id'] = 1;
+        $todo = Todo::create($data);
+
+        return to_route('todo.show', $todo)->with('message', 'Task was created');
     }
 
     /**
@@ -52,16 +58,30 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Todo $todo)
+        public function update(Request $request, Todo $todo)
     {
-       //
+        /*if ($todo->user_id !== request()->user()->id) {
+            abort(403);
+        }*/
+        $data = $request->validate([
+            'todo' => ['required', 'string']
+        ]);
+
+        $todo->update($data);
+
+        return to_route('todo.show', $todo)->with('message', 'Todo was updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo)
+        public function destroy(Todo $todo)
     {
-        //
+        /*if ($todo->user_id !== request()->user()->id) {
+            abort(403);
+        }*/
+        $todo->delete();
+
+        return to_route('$todo.index')->with('message', 'Todo was deleted');
     }
 }
