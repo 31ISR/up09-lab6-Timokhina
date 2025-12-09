@@ -1,15 +1,28 @@
-<x-layout>
-    <div class="main-container">
-        <form class="edit-screen" action="{{ route('todo.update', $todo) }}" method="POST">
+<x-app-layout>
+    <div class="todo-form">
+        <h1>Edit your todo</h1>
+        <form action="{{ route('todo.update', $todo) }}" method="POST">
             @csrf
             @method('PUT')
-            <h1>Edit task</h1>
-            <input type="text" name="title" value="{{ $todo->title }}" required>
-            <textarea name="description">{{ $todo->description }}</textarea>
-            <div class="action-group">
-                <a href="{{ route('todo.index') }}" class="action-btn cancel-btn">Cancel</a>
-                <button type="submit" class="action-btn submit-btn">Update Task</button>
+            <input 
+                type="text" 
+                name="name" 
+                value="{{ $todo->name }}"
+                class="todo-input"
+                required
+            >
+            <div class="form-checkboxes">
+                <label>
+                    <input type="checkbox" name="done" value="1" {{ $todo->done ? 'checked' : '' }}> Done
+                </label>
+                <label>
+                    <input type="checkbox" name="urgent" value="1" {{ $todo->urgent ? 'checked' : '' }}> Urgent
+                </label>
+            </div>
+            <div class="form-actions">
+                <a href="{{ route('todo.index') }}" class="btn btn-cancel">Cancel</a>
+                <button type="submit" class="btn btn-submit">Update</button>
             </div>
         </form>
     </div>
-</x-layout>
+</x-app-layout>

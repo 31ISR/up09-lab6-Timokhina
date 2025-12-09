@@ -7,9 +7,6 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Note;
 use App\Models\Todo;
-
-
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -30,6 +27,6 @@ class DatabaseSeeder extends Seeder
 
         // Создаем 100 заметок для теста
         Note::factory(100)->create();
-        Todo::factory(20)->create();
+        Todo::factory(50)->create();
     }
 }

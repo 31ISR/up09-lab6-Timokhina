@@ -1,46 +1,34 @@
-<x-layout>
-    <div class="main-container">
-        <div class="view-screen {{ $todo->completed ? 'completed' : '' }}">
-            <h1>{{ $todo->title }}</h1>
-            <div class="todo$todo-meta">
-                <span class="status-badge {{ $todo->completed ? 'completed' : 'pending' }}">
-                    {{ $todo->completed ? 'Completed' : 'Pending' }}
-                </span>
-                <span class="date-created">
-                    Created: {{ $todo->created_at->format('d.m.Y H:i') }}
-                </span>
+<x-app-layout>
+    <div class="todos-container">
+        <div class="todo-view-card {{ $todo->urgent ? 'urgent' : '' }} {{ $todo->done ? 'done' : '' }}">
+            <div class="todo-view-header">
+                <h1 class="todo-view-title">{{ $todo->name }}</h1>
+                <p class="todo-view-created">Created {{ $todo->created_at->format('d.m.Y H:i') }}</p>
                 @if($todo->updated_at != $todo->created_at)
-                    <span class="date-updated">
-                        Updated: {{ $todo->updated_at->format('d.m.Y H:i') }}
-                    </span>
+                    <p class="todo-view-updated">Updated {{ $todo->updated_at->format('d.m.Y H:i') }}</p>
                 @endif
             </div>
-            
-            <div class="todo$todo-content">
-                <h3>Description:</h3>
-                <p>{{ $todo->description ?? 'No description provided' }}</p>
+
+            <div class="todo-view-content">
+                <p><strong>Status:</strong> {{ $todo->done ? 'Done' : 'Pending' }}</p>
+                <p><strong>Priority:</strong> {{ $todo->urgent ? 'Urgent' : 'Normal' }}</p>
+                @if($todo->done)
+                    <p><strong>Completed at:</strong> {{ $todo->dateCompleted->format('d.m.Y H:i') }}</p>
+                @endif
             </div>
-            
-            <div class="action-group">
-                <form action="{{ route('todo.update', $todo) }}" method="POST" style="display: inline;">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" name="completed" value="{{ $todo->completed ? 0 : 1 }}">
-                    <button type="submit" class="action-btn {{ $todo->completed ? 'incomplete-btn' : 'complete-btn' }}">
-                        {{ $todo->completed ? 'Mark Incomplete' : 'Mark Complete' }}
-                    </button>
-                </form>
+
+            <div class="todo-view-actions">
+                <a href="{{ route('todo.index') }}" class="btn btn-cancel">Cancel</a>
+                <a href="{{ route('todo.edit', $todo) }}" class="btn-edit">Edit</a>
                 
-                <a href="{{ route('todo.edit', $todo) }}" class="action-btn edit-btn">Edit</a>
-                
-                <form action="{{ route('todo.destroy', $todo) }}" method="POST" style="display: inline;">
+                <form action="{{ route('todo.destroy', $todo) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="action-btn delete-btn">Delete</button>
+                    <button type="submit" class="btn-delete">
+                        Delete                  
+                    </button>
                 </form>
-                
-                <a href="{{ route('todo.index') }}" class="action-btn back-btn">Back to List</a>
             </div>
         </div>
     </div>
-</x-layout>
+</x-app-layout>

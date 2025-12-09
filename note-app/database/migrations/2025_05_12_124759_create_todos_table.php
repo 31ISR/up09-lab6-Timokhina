@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->string('name', length:75);
-            $table->boolean('done');
-            $table->boolean('urgent');
-            $table->dateTime('dateCompleted');
+            $table->string('name', 75);
+            $table->boolean('done')->default(false);
+            $table->boolean('urgent')->default(false);
+            $table->dateTime('dateCompleted')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,24 +1,27 @@
-<x-layout>
-    <div class="main-container">
-        <form class="edit-screen" action="{{ route('todo.store') }}" method="POST">
+<x-app-layout>
+    <div class="todo-form">
+        <h1>Create new todo</h1>
+        <form action="{{ route('todo.store') }}" method="POST">
             @csrf
-            <h1>
-                Create new task
-            </h1>
-
-            <input type="text" name="title" placeholder="Task title" required>
-
-            <textarea name="description" placeholder="Task description"></textarea>
-
-            <div class="action-group">
-                <a href="{{ route('todo.index') }}" class="action-btn cancel-btn">
-                    Cancel
-                </a>
-
-                <button type="submit" class="action-btn submit-btn">
-                    Create Task
-                </button>
+            <input 
+                type="text" 
+                name="name" 
+                placeholder="Enter your todo here"
+                class="todo-input"
+                required
+            >
+            <div class="form-checkboxes">
+                <label>
+                    <input type="checkbox" name="done" value="1"> Done
+                </label>
+                <label>
+                    <input type="checkbox" name="urgent" value="1"> Urgent
+                </label>
+            </div>
+            <div class="form-actions">
+                <a href="{{ route('todo.index') }}" class="btn btn-cancel">Cancel</a>
+                <button type="submit" class="btn btn-submit">Submit</button>
             </div>
         </form>
     </div>
-</x-layout>
+</x-app-layout> 

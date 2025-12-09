@@ -1,32 +1,39 @@
-<x-layout>
-    <div class="main-container">
-        <a href="{{ route('todo.create') }}" class="new-note-btn">New Task</a>
+<x-app-layout>
+    <div class="todos-container">
+        <div>
+            <a href="{{ route('note.index') }}" class="new-note-btn">
+                Notes
+            </a>
+            <a href="{{ route('todo.create') }}" class="new-note-btn">
+                New Todo
+            </a>
+        </div>
         
-        @foreach ($todos as $todo)
-            <div class="view-screen {{ $todo->completed ? 'completed' : '' }}">
-                <h3>{{ $todo->title }}</h3>
-                <div class="note-content">{{ $todo->description }}</div>
-                <div class="action-group">
-                    <form action="{{ route('todo.update', $todo) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="completed" value="{{ $todo->completed ? 0 : 1 }}">
-                        <button type="submit" class="action-btn {{ $todo->completed ? 'incomplete-btn' : 'complete-btn' }}">
-                            {{ $todo->completed ? 'Mark Incomplete' : 'Mark Complete' }}
-                        </button>
-                    </form>
-                    <a href="{{ route('todo.edit', $todo) }}" class="action-btn edit-btn">Edit</a>
-                    <form action="{{ route('todo.destroy', $todo) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="action-btn delete-btn">Delete</button>
-                    </form>
+        <div class="todos-grid">
+            @foreach ($todos as $todo)
+                <div class="todo-card {{ $todo->urgent ? 'urgent' : '' }} {{ $todo->done ? 'done' : '' }}">
+                    <div class="todo-content">
+                        <h3>{{ $todo->name }}</h3>
+                        <p>Status: {{ $todo->done ? 'Выполнено' : 'Выполняется' }}</p>
+                        @if($todo->done)
+                            <p>Completed: {{ $todo->dateCompleted->format('d.m.Y H:i') }}</p>
+                        @endif
+                    </div>
+                    <div class="todo-actions">
+                        <a href="{{ route('todo.show', $todo) }}">View</a>
+                        <a href="{{ route('todo.edit', $todo) }}">Edit</a>
+                        <form action="{{ route('todo.destroy', $todo) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        @endforeach
-        
+            @endforeach
+        </div>
+
         <div class="pagination">
             {{ $todos->links() }}
         </div>
     </div>
-</x-layout>
+</x-app-layout>
